@@ -1,11 +1,20 @@
 import * as React from 'react'
 import './Login.less'
+import { withRouter } from "react-router-dom"
 import avator from '../../assets/images/logo.svg'
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'antd';
 
 class NormalLoginForm extends React.Component {
+  constructor (props) {
+    super (props)
+    this.state = {}
+  }
+
+  /**
+   * form表单提交触发的方法
+   */
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -15,8 +24,18 @@ class NormalLoginForm extends React.Component {
     });
   }
 
+  /**
+   * 点击登录按钮触发的方法
+   */
+  handleClickToHome = (e) => {
+    e.preventDefault()
+    const { history } = this.props
+    console.log(history)
+    history.push('/Home')
+  }
+
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator } = this.props.form
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <div className="title-wrapper">
@@ -46,18 +65,18 @@ class NormalLoginForm extends React.Component {
           })(
             <Checkbox>记住密码</Checkbox>
           )}
-          <a className="login-form-forgot" href="#/">忘记密码</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <a className="login-form-forgot" href="/Home">忘记密码</a>
+          <Button type="primary" htmlType="submit" onClick={this.handleClickToHome} className="login-form-button">
             登录
           </Button>
           <a href="#/Home">前往注册!</a>
         </Form.Item>
       </Form>
-    );
+    )
   }
 }
 
-const WrappedNormalLoginForm = Form.create({})(NormalLoginForm);
+const WrappedNormalLoginForm = Form.create({})(withRouter(NormalLoginForm))
 
 class Login extends React.Component {
   render () {
@@ -68,6 +87,5 @@ class Login extends React.Component {
     )
   }
 }
-
 
 export default Login
