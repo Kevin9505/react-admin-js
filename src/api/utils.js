@@ -7,7 +7,9 @@ const utils ={
             url: config.url,
             params: config.params ? config.params : null,
             data: config.data ? config.data : null,
-        }).then(config.callback).catch(config.catch ? config.catch : () => {})
+        })
+        .then(config.callback)
+        .catch(config.catch ? config.catch : () => {})
     }
 }
  

@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Layout, Breadcrumb } from 'antd'
+import { Layout, Breadcrumb, Button } from 'antd'
+import { withRouter } from "react-router-dom"
 import './Home.less'
 import MyAsideSubMenu from '../../layouts/Aside/Aside'
 import MyHeader from '../../layouts/Header/Header'
@@ -20,6 +21,11 @@ class SiderDemo extends React.Component {
     this.setState({
       collapsed: !this.state.collapsed,
     })
+  }
+
+  handleClickLogout = () => {
+    const { history } = this.props
+    history.goBack()
   }
 
   render() {
@@ -61,6 +67,7 @@ class SiderDemo extends React.Component {
               style={{ margin: 0, overflow: 'initial', padding: 24, background: '#fff' }}
             >
               Content
+              <Button onClick={this.handleClickLogout}>退出登录</Button>
             </Content>
           </Layout>
           {/* 页脚 */}
@@ -72,4 +79,4 @@ class SiderDemo extends React.Component {
     );
   }
 }
- export default SiderDemo
+ export default withRouter(SiderDemo)
