@@ -14,7 +14,8 @@ class SiderDemo extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      collapsed: false
+      collapsed: false,
+      testData: []
     }
   }
 
@@ -32,6 +33,10 @@ class SiderDemo extends React.Component {
     history.goBack()
   }
 
+  handleClickDelete (id) {
+    console.log(id)
+  }
+
   componentDidMount () {
     const { getUserInfoConfig } = requestConfig
     const config = {
@@ -39,6 +44,9 @@ class SiderDemo extends React.Component {
       callback: (res) => {
         const { data } = res
         console.log(data)
+        this.setState({
+          testData: data.data
+        })
       }
     }
     const findConfig = { ...getUserInfoConfig, ...config }
@@ -85,6 +93,9 @@ class SiderDemo extends React.Component {
             >
               Content
               <Button onClick={this.handleClickLogout}>退出登录</Button>
+              {
+                this.state.testData.map(el => <div key={el.id} onClick={(e) => this.handleClickDelete(e)}>{el.username}{ '------------'}<span>删除</span></div>)
+              }
             </Content>
           </Layout>
           {/* 页脚 */}

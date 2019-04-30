@@ -2,6 +2,7 @@
   "result": "success",
   "data|10": [
     {
+      "id|+1": 1,
       "userSn": "@string(11)",
       "username": "@cname",
       "age": "@integer(20,30)",
