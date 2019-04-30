@@ -1,3 +1,7 @@
+import '../../mock/mock'
+import utils from '../../api/utils'
+import requestConfig from '../../api/axiosRequestConfig'
+
 import * as React from 'react'
 import { Layout, Breadcrumb, Button } from 'antd'
 import { withRouter } from "react-router-dom"
@@ -26,6 +30,19 @@ class SiderDemo extends React.Component {
   handleClickLogout = () => {
     const { history } = this.props
     history.goBack()
+  }
+
+  componentDidMount () {
+    const { getUserInfoConfig } = requestConfig
+    const config = {
+      param: null,
+      callback: (res) => {
+        const { data } = res
+        console.log(data)
+      }
+    }
+    const findConfig = { ...getUserInfoConfig, ...config }
+    utils.axiosMethod(findConfig)
   }
 
   render() {

@@ -1,0 +1,12 @@
+{
+  "result": "success",
+  "data|10": [
+    {
+      "userSn": "@string(11)",
+      "username": "@cname",
+      "age": "@integer(20,30)",
+      "imgUrl": "@url"
+    }
+  ],
+  "status": 200
+}
