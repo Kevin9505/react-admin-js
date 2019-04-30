@@ -28,10 +28,11 @@ class MyAsideSubMenu extends React.Component {
    */
   handleClickMenuItem = (option) => {
     console.log(option)
+    this.props.history.push('/room/roomList')
   }
 
   componentDidMount () {
-    const getMenuListConfig = requestConfig.getMenuListConfig
+    const { getMenuListConfig } = requestConfig
     const config = {
       param: null,
       callback: (res) => {
