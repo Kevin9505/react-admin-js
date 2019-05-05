@@ -7,8 +7,8 @@ import Login from '../pages/User/Login'
 const BasicRoute = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Login}/>
-      <Route path="/Home" component={Home}/>
+      <Route exact path="/" component={Login} />
+      <Route path="/Home" component={Home} />
     </Switch>
   </Router>
 )

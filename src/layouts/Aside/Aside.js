@@ -10,6 +10,7 @@ class MyAsideSubMenu extends React.Component {
     super (props)
     this.state = {
       collapsed: false,
+      openKeys: [], // 当前展开的 SubMenu 菜单项 key 数组
       menuListData: []
     }
   }
@@ -24,11 +25,20 @@ class MyAsideSubMenu extends React.Component {
   }
 
   /**
-   * 点击选择菜单选项触发的方法
+   * 点击 MenuItem 调用此函数
    */
   handleClickMenuItem = (option) => {
     console.log(option)
-    this.props.history.push('/room/roomList')
+    // this.props.history.push('/room/roomList')
+  }
+
+  /**
+   * SubMenu 展开/关闭的回调
+   */
+  handleOnOpenChange  = (option) => {
+    this.setState({
+      openKeys: [option[option.length - 1]]
+    })
   }
 
   componentDidMount () {
@@ -54,10 +64,12 @@ class MyAsideSubMenu extends React.Component {
         <Menu
           defaultSelectedKeys={['1']}
           defaultOpenKeys={[]}
+          openKeys={this.state.openKeys}
           mode="inline"
           theme="dark"
           inlineCollapsed={this.state.collapsed}
           onClick={this.handleClickMenuItem}
+          onOpenChange={this.handleOnOpenChange}
         >
           {
             this.state.menuListData.map(el =>
