@@ -31,7 +31,7 @@ class NormalLoginForm extends React.Component {
     e.preventDefault()
     const { history } = this.props
     console.log(history)
-    history.push('/Home')
+    history.push('/Home/Home')
   }
 
   render() {

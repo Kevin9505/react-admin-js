@@ -8,14 +8,15 @@ import { withRouter } from "react-router-dom"
 import './Home.less'
 import MyAsideSubMenu from '../../layouts/Aside/Aside'
 import MyHeader from '../../layouts/Header/Header'
+import Container from '../../layouts/Container/Container'
+
 const { Sider, Content, Footer } = Layout
 
 class SiderDemo extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      collapsed: false,
-      testData: []
+      testData: [],
     }
   }
 
@@ -28,13 +29,13 @@ class SiderDemo extends React.Component {
     })
   }
 
+  /**
+   * 点击退出登录触发的方法
+   */
   handleClickLogout = () => {
     const { history } = this.props
-    history.goBack()
-  }
-
-  handleClickDelete (id) {
-    console.log(id)
+    console.log(history)
+    history.push('/Login')
   }
 
   componentDidMount () {
@@ -43,7 +44,7 @@ class SiderDemo extends React.Component {
       param: null,
       callback: (res) => {
         const { data } = res
-        console.log(data)
+        // console.log(data)
         this.setState({
           testData: data.data
         })
@@ -91,11 +92,8 @@ class SiderDemo extends React.Component {
             <Content
               style={{ margin: 0, overflow: 'initial', padding: 24, background: '#fff' }}
             >
-              Content
+              <Container />
               <Button onClick={this.handleClickLogout}>退出登录</Button>
-              {
-                this.state.testData.map(el => <div key={el.id} onClick={(e) => this.handleClickDelete(e)}>{el.username}{ '------------'}<span>删除</span></div>)
-              }
             </Content>
           </Layout>
           {/* 页脚 */}

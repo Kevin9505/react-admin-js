@@ -1,5 +1,6 @@
 import * as React from 'react'
 import requestConfig from '../../api/axiosRequestConfig'
+import { Link } from "react-router-dom"
 import utils from '../../api/utils'
 import { Menu, Icon } from 'antd'
 
@@ -11,8 +12,11 @@ class MyAsideSubMenu extends React.Component {
     this.state = {
       collapsed: false,
       openKeys: [], // 当前展开的 SubMenu 菜单项 key 数组
-      menuListData: []
+      menuListData: [], // 菜单栏的数据
+      defaultSelectedKeys: window.location.href.split('/')[4] // 默认选中的菜单项
     }
+    // 绑定方法的 this 指向
+    this.handleClickMenuItem = this.handleClickMenuItem.bind(this)
   }
 
   /**
@@ -27,26 +31,58 @@ class MyAsideSubMenu extends React.Component {
   /**
    * 点击 MenuItem 调用此函数
    */
-  handleClickMenuItem = (option) => {
+  async handleClickMenuItem (option) {
     console.log(option)
-    // this.props.history.push('/room/roomList')
+    // 设置当前选中的菜单子项
+    await this.setState({
+      defaultSelectedKeys: option.key
+    })
+    // 判断当前菜单子项长度是否大于1
+    if (option.keyPath.length > 1) {
+      let newOption = option.keyPath[option.keyPath.length - 1]
+      // 如果有,设置当前选中的父项
+      this.setState({
+        openKeys: [newOption]
+      })
+    } else {
+      this.setState({
+        openKeys: []
+      })
+    }
+    // 将当前选中的父项存储到本地，防止刷新时不会被选中
+    sessionStorage.setItem('sub', JSON.stringify(this.state.openKeys))
   }
 
   /**
    * SubMenu 展开/关闭的回调
    */
   handleOnOpenChange  = (option) => {
-    this.setState({
-      openKeys: [option[option.length - 1]]
-    })
+    console.log(option)
+    // 
+    if (option.length > 1) {
+      let newOption = option[option.length - 1]
+      this.setState({
+        openKeys: [newOption]
+      })
+    } else {
+      this.setState({
+        openKeys: option
+      })
+    }
+    // 将当前选中的父项存储到本地，防止刷新时不会被选中
+    sessionStorage.setItem('sub', JSON.stringify(this.state.openKeys))
   }
 
   componentDidMount () {
+    // 结构请求的配置
     const { getMenuListConfig } = requestConfig
+    // 构造请求配置
     const config = {
-      param: null,
-      callback: (res) => {
+      param: null, // get请求的参数
+      callback: (res) => { // 接收请求返回值的回到函数
+        // 结构返回的数据
         const { data } = res
+        console.log(data)
         if (data.success === 200) {
           this.setState({
             menuListData: data.data
@@ -54,16 +90,30 @@ class MyAsideSubMenu extends React.Component {
         }
       }
     }
+    // 构造完整的请求配置
     const finalConfig = { ...getMenuListConfig, ...config }
+    // 发送请求,获取数据
     utils.axiosMethod(finalConfig)
+    // 取出本地存储的父项选中的值
+    const openKey = JSON.parse(sessionStorage.getItem('sub'))
+    // 判断是否存在,解决页面刷新时,如果有选中项不会被选中
+    if (openKey) {
+      this.setState({
+        openKeys: openKey
+      })
+    } else {
+      this.setState({
+        openKeys: []
+      })
+    }
   }
 
   render() {
     return (
       <div>
         <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={[]}
+          defaultSelectedKeys={[this.state.defaultSelectedKeys]}
+          defaultOpenKeys={[this.state.defaultSelectedKeys]}
           openKeys={this.state.openKeys}
           mode="inline"
           theme="dark"
@@ -74,15 +124,17 @@ class MyAsideSubMenu extends React.Component {
           {
             this.state.menuListData.map(el =>
               el.sub.length > 0 ? 
-              <SubMenu key={el.key} title={<span><Icon type={el.icon} /><span>{el.name}</span></span>}>
+              <SubMenu key={`sub${el.id}`} title={<span><Icon type={el.icon} /><span>{el.name}</span></span>}>
                 {
-                  el.sub.map(it => <Menu.Item key={it.key}>{it.name}</Menu.Item>)
+                  el.sub.map(it => <Menu.Item key={it.key}>{it.name}<Link
+                    to={`/Home/${it.key}`}/></Menu.Item>)
                 }
               </SubMenu>
               :
               <Menu.Item key={el.key}>
                 <Icon type={el.icon} />
                 <span>{el.name}</span>
+                <Link to={`${el.key}`}/>
               </Menu.Item>
               )
           }

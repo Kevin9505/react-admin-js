@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+// import { withRouter } from 'react-router-dom'
 import {  Button } from 'antd'
 
 class RoomList extends React.Component {
@@ -10,4 +10,5 @@ class RoomList extends React.Component {
   }
 }
 
-export default withRouter(RoomList)
+// export default withRouter(RoomList)
+export default RoomList
