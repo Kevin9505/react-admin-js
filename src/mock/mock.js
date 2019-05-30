@@ -9,4 +9,4 @@ Mock.mock('/user/delete', 'post', function (option) {
   data = data.filter(el => el.id !== id)
 })
 // 提供接口 Mock.mock('接口名称', '请求方式', require('请求的数据'))
-Mock.mock('/user/userInfo', 'get', data)
+Mock.mock('/room/getRoomList', 'get', data)

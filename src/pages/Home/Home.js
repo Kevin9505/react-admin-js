@@ -3,7 +3,7 @@ import utils from '../../api/utils'
 import requestConfig from '../../api/axiosRequestConfig'
 
 import * as React from 'react'
-import { Layout, Breadcrumb, Button } from 'antd'
+import { Layout, Breadcrumb, } from 'antd'
 import { withRouter } from "react-router-dom"
 import './Home.less'
 import MyAsideSubMenu from '../../layouts/Aside/Aside'
@@ -44,7 +44,7 @@ class SiderDemo extends React.Component {
       param: null,
       callback: (res) => {
         const { data } = res
-        // console.log(data)
+        console.log(data)
         this.setState({
           testData: data.data
         })
@@ -72,6 +72,7 @@ class SiderDemo extends React.Component {
           {/* 抽离出来的头部组件 handleToggle -> 传递事件  collapsed -> 传值 */}
           <MyHeader
             handleToggle={this.toggle}
+            handleClickLogout={this.handleClickLogout}
             collapsed={this.state.collapsed}
           />
           {/* <Header style={{ background: '#001529', padding: 0 }}>
@@ -93,7 +94,6 @@ class SiderDemo extends React.Component {
               style={{ margin: 0, overflow: 'initial', padding: 24, background: '#fff' }}
             >
               <Container />
-              <Button onClick={this.handleClickLogout}>退出登录</Button>
             </Content>
           </Layout>
           {/* 页脚 */}

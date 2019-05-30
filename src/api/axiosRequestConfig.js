@@ -11,7 +11,7 @@ const config = {
 
   getUserInfoConfig: {
     method: 'get',
-    url: '/user/userInfo'
+    url: '/room/getRoomList'
   }
 }
 

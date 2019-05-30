@@ -2,11 +2,17 @@
   "result": "success",
   "data|10": [
     {
-      "id|+1": 1,
-      "userSn": "@string(11)",
-      "username": "@cname",
-      "age": "@integer(20,30)",
-      "imgUrl": "@url"
+      "placeID|+1": 1,
+      "placeName": "中国门店",
+      "placeInfo": "中国最好的门店，没有之一。",
+      "roomAddress": "广州市广州大道北1098号",
+      "roomPhone": "13535239600",
+      "picURL": "http://www.snowstormdoll.cn/uploads/images/snowAdmin1/1550737086000.png",
+      "balance": "100",
+      "bankAccount": "6214851202168691",
+      "accountName": "大叔",
+      "mobilhone": "13535239600",
+      "IDcard": "440823199507231212"
     }
   ],
   "status": 200
